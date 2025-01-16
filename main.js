@@ -11,7 +11,15 @@ function debounce(func, delay) {
 document.addEventListener("DOMContentLoaded", () => {
     let thumbs = new Swiper(".thumbsSlider", {
         spaceBetween: 10,
-        slidesPerView: 5,
+        slidesPerView: 3,
+        breakpoints: {
+            768: {
+                slidesPerView: 5,
+            },
+            580: {
+                slidesPerView: 4,
+            }
+        },
         freeMode: true,
         watchSlidesProgress: true,
     });
@@ -22,15 +30,31 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     });
     new Swiper(".slideBestSeller", {
-        slidesPerView: 4,
-        spaceBetween: 20
+        slidesPerView: 1,
+        spaceBetween: 20,
+        breakpoints: {
+            1280: {
+                slidesPerView: 4,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            560: {
+                slidesPerView: 2,
+            }
+        }
     });
+
+    $(".menu-mobile").metisMenu();
+
     new Swiper(".slideBanner", {});
+
     const backTop = document.querySelector(".back-top")
     const decrease = document.querySelector(".product .decrease")
     const increase = document.querySelector(".product .increase")
     const inputQuantityCart = document.querySelector(".product .form-cart input[name='quantity']");
     const productSize = document.querySelectorAll(".product .product-size ul li")
+    const openMenuMobile = document.querySelector(".icon-bars")
 
     decrease.addEventListener("click", () => {
         let value = parseInt(inputQuantityCart.value)
@@ -98,5 +122,26 @@ document.addEventListener("DOMContentLoaded", () => {
             top: 0,
             behavior: "smooth", // Cuộn mượt
         });
+    })
+
+    document.documentElement.addEventListener("click", (e) => {
+        if (e.target.closest('.menu-mobile')) {
+            return
+        }
+
+        if (e.target.closest('.overlay')) {
+            const menuMobile = document.querySelector(".menu-mobile")
+            const overlay = document.querySelector(".overlay")
+            menuMobile.classList.remove("open")
+            overlay.classList.remove("fixed")
+            return
+        }
+    })
+
+    openMenuMobile.addEventListener("click", () => {
+        const menuMobile = document.querySelector(".menu-mobile")
+        const overlay = document.querySelector(".overlay")
+        menuMobile.classList.add("open")
+        overlay.classList.add("fixed")
     })
 })
